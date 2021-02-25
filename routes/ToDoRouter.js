@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { getToDos, addnewToDo, deleteToDo }=require("../controllers/ToDoController.js")
+const { getToDos, addNewToDo, deleteToDo }=require("../controllers/ToDoController.js")
 
 /* GET home page. */
 router.get('/', getToDos);
 /* Add todo. */
 
-router.post('/', addnewToDo);
+router.post('/', addNewToDo);
 
 /* Add todo. */
 router.delete('/:id', deleteToDo);
