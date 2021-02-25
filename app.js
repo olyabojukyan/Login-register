@@ -7,7 +7,7 @@ const mongoose=require("mongoose")
 const { mongodbUrl}=require("./config/config")
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const authRouter = require('./routes/AuthRouter');
 const todoRouter=require("./routes/ToDoRouter")
 
 //connect to mongo DB
@@ -25,9 +25,6 @@ db.on("connected",()=>{
   console.log("connected")
 })
 
-
-
-
 const app = express();
 
 // view engine setup
@@ -41,7 +38,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/auth', authRouter);
 app.use('/todo', todoRouter);
 
 // catch 404 and forward to error handler
