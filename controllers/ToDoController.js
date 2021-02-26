@@ -1,7 +1,7 @@
 const { ToDo } = require("../models/toDoModel")
 
 class ToDoController {
-  async addNewToDo(req,res){
+  async addnewToDo(req,res){
      
    let todo=req.body.todo
       let result=await ToDo.create({item:todo})

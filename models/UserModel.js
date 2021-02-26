@@ -1,6 +1,6 @@
 const mongoose=require("mongoose")
 const bcrypt=require("bcrypt")
-const Salt_round=10
+const SALT_WORK_FACTOR=10
 const Schema=mongoose.Schema
 
 const UserSchema=new Schema({
@@ -21,27 +21,26 @@ email: {
     timestamps: true
 })
 
-UserSchema.pre("save", preSave(next)=>{
-    const user=this
+UserSchema.pre('save', function preSave(next) {
+    const user = this;
+  
+    if (!user.isModified('password')) return next();
+  
+    return bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+      if (err) return next(err);
+      return bcrypt.hash(user.password, salt, (err, hash) => {
+        if (err) return next(err);
+        user.password = hash;
+        return next();
+      });
+    });
+  });
+  
+  UserSchema.methods.comparePassword=async function comparePassword(reqPass){
 
-    if(!user.password.isModified()) return next()
-    return bcrypt.genSalt("Salt_round", (err, hashSalt)=>{
-        if(err) next (err)
-        bcrypt.hash(user.password, hashSalt, (err, hash)=>{
-            if(err) next(err)
-            user.password=hash
-            next()
-        })
-    })
-})
+    return await bcrypt.compare(reqPass, this.password)
 
-UserSchema.methods.comparePassword=function compirePassword(reqPass, cb){
-    bcrypt.compare(reqPass, this.password, (err, match)=>{
-        if(err) return cb(err)
-        return cb(null, match)
-    })
 }
-
 const UserModel=mongoose.model("user", UserSchema)
 module.exports={
     UserModel

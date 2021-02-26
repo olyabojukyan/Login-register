@@ -7,8 +7,3 @@ a {
   color: #00B7FF;
 }
 
-
-li:hover{
-  cursor: pointer;
-  text-decoration: line-through;
-}
