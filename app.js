@@ -11,7 +11,7 @@ const { mongodbUrl}=require("./config/config")
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/AuthRouter');
 const todoRouter=require("./routes/ToDoRouter");
-const { checkSign } = require('./middlewares/checkSign');
+const { checkSign } = require('.//middlewares/checkSign');
 
 
 //connect to mongo DB
