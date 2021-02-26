@@ -11,6 +11,7 @@ const { mongodbUrl}=require("./config/config")
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/AuthRouter');
 const todoRouter=require("./routes/ToDoRouter");
+const { checkSign } = require('./middlewares/checkSign');
 
 
 //connect to mongo DB
@@ -43,7 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/todo', todoRouter);
+app.use('/todo', checkSign, todoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
